@@ -1,4 +1,4 @@
-const User = require('../models/user.js');
+const User = require('../models/User.js');
 
 // Fonction pour afficher la liste des utilisateurs
 exports.getAllUsers = async (req, res) => {

@@ -64,7 +64,7 @@ app.use('/catways', catwayDetailsRoute);
 const reservationsRoute = require('./routes/reservations');
 app.use('/reservations', reservationsRoute);
 
-const usersRoute = require('./routes/users');
+const usersRoute = require('./routes/utilisateurs');
 app.use('/users', usersRoute);
 
 const authController = require('./controllers/authController');

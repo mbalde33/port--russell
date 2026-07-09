@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h1>Tableau de Bord - Port Russell</h1>
+        
+        <div style="background: #fdfdfd; padding: 20px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 30px;">
+            <h2>Bienvenue, <%= user.name %> !</h2>
+            <p>Email : <strong><%= user.email %></strong></p>
+            <p>Aujourd'hui nous sommes le : <strong><%= new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></strong></p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <a href="/catways" style="text-decoration: none; padding: 30px; background: #0b4f6c; color: white; border-radius: 10px; font-size: 1.2em;">
+                ⚓ Gérer les Catways
+            </a>
+            <a href="/reservations" style="text-decoration: none; padding: 30px; background: #1f7a8c; color: white; border-radius: 10px; font-size: 1.2em;">
+                📅 Gérer les Réservations
+            </a>
+            <a href="/users" style="text-decoration: none; padding: 30px; background: #2c3e50; color: white; border-radius: 10px; font-size: 1.2em;">
+                👥 Gérer les Utilisateurs
+            </a>
+            <a href="/api-docs" target="_blank" style="text-decoration: none; padding: 30px; background: #27ae60; color: white; border-radius: 10px; font-size: 1.2em;">
+                📖 Documentation API
+            </a>
+        </div>
+
+        <!-- TABLEAU DES RÉSERVATIONS RÉCENTES -->
+        <div style="margin-top: 40px; text-align: left;">
+            <h3>📊 Réservations récentes</h3>
+            <table border="1" style="width:100%; border-collapse: collapse; background: white;">
+                <thead>
+                    <tr style="background: #0b4f6c; color: white;">
+                        <th>N° Catway</th>
+                        <th>Client</th>
+                        <th>Bateau</th>
+                        <th>Arrivée</th>
+                        <th>Départ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (reservations && reservations.length > 0) { %>
+                        <% reservations.forEach(res => { %>
+                            <tr>
+                                <td><%= res.catwayNumber %></td>
+                                <td><%= res.clientName %></td>
+                                <td><%= res.boatName %></td>
+                                <td><%= res.startDate ? new Date(res.startDate).toLocaleDateString('fr-FR') : 'N/A' %></td>
+                                <td><%= res.endDate ? new Date(res.endDate).toLocaleDateString('fr-FR') : 'N/A' %></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 15px;">Aucune réservation pour le moment.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <hr style="margin: 40px 0;">
+        
+        <a href="/logout" style="color: #e74c3c; font-weight: bold; text-decoration: none;">🚪 Déconnexion</a>
+    </div>
+</body>
+</html>

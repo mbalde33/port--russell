@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Catways - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion des Catways</h1>
+        
+        <nav>
+            <a href="/dashboard">Retour au Dashboard</a>
+        </nav>
+
+        <!-- FORMULAIRE POUR CRÉER UN CATWAY -->
+        <section style="margin: 20px 0; padding: 15px; background: #eee; border-radius: 5px;">
+            <h3>Ajouter un nouveau Catway</h3>
+            <form action="/catways" method="POST">
+                <input type="number" name="catwayNumber" placeholder="N° Catway" required>
+                <select name="catwayType">
+                    <option value="long">Long</option>
+                    <option value="short">Short</option>
+                </select>
+                <input type="text" name="catwayState" placeholder="État (ex: Bon)" required>
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- TABLEAU DE LA LISTE -->
+        <table border="1" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #0b4f6c; color: white;">
+                    <th>N° Catway</th>
+                    <th>Type</th>
+                    <th>État</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (catways && catways.length > 0) { %>
+                    <% catways.forEach(catway => { %>
+                        <tr>
+                            <td><%= catway.catwayNumber %></td>
+                            <td><%= catway.catwayType %></td>
+                            <td><%= catway.catwayState %></td>
+                            <td>
+                                <a href="/catways/<%= catway.catwayNumber %>">Voir</a>
+                                &nbsp;|&nbsp;
+                                <a href="/catways/delete/<%= catway._id %>" style="color: red;" onclick="return confirm('Supprimer ce catway ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4" style="text-align: center;">Aucun catway enregistré.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

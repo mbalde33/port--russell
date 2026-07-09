@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Utilisateurs - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion des Utilisateurs</h1>
+        
+        <nav>
+            <a href="/dashboard">Retour au Dashboard</a>
+        </nav>
+
+        <!-- FORMULAIRE POUR CRÉER UN UTILISATEUR -->
+        <section style="margin: 20px 0; padding: 15px; background: #eee; border-radius: 5px;">
+            <h3>Créer un nouvel utilisateur</h3>
+            <form action="/users" method="POST">
+                <input type="text" name="name" placeholder="Nom complet" required>
+                <input type="email" name="email" placeholder="Adresse Email" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">Créer le compte</button>
+            </form>
+        </section>
+
+        <!-- TABLEAU DES UTILISATEURS -->
+        <table border="1" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #0b4f6c; color: white;">
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td>
+                                <a href="/users/delete/<%= user._id %>" style="color: red;" onclick="return confirm('Supprimer cet utilisateur ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="3" style="text-align: center;">Aucun utilisateur enregistré.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

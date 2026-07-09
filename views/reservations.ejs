@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Réservations - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion des Réservations</h1>
+        <nav><a href="/dashboard">Retour au Dashboard</a></nav>
+
+        <section style="margin: 20px 0; padding: 15px; background: #eee; border-radius: 5px;">
+            <h3>Enregistrer une nouvelle Réservation</h3>
+            <form action="/reservations" method="POST">
+                <input type="number" name="catwayNumber" placeholder="N° Catway" required>
+                <input type="text" name="clientName" placeholder="Nom du Client" required>
+                <input type="text" name="boatName" placeholder="Nom du Bateau" required>
+                <div style="margin-top: 10px;">
+                    <label>Date de début :</label>
+                    <input type="date" name="startDate" required>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label>Date de fin :</label>
+                    <input type="date" name="endDate" required>
+                </div>
+                <button type="submit" style="margin-top: 10px;">Enregistrer la réservation</button>
+            </form>
+        </section>
+
+        <table border="1" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #0b4f6c; color: white;">
+                    <th>N° Catway</th>
+                    <th>Client</th>
+                    <th>Bateau</th>
+                    <th>Arrivée</th>
+                    <th>Départ</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (reservations && reservations.length > 0) { %>
+                    <% reservations.forEach(res => { %>
+                        <tr>
+                            <td><%= res.catwayNumber %></td>
+                            <td><%= res.clientName %></td>
+                            <td><%= res.boatName %></td>
+                            <td><%= res.startDate ? new Date(res.startDate).toLocaleDateString() : 'N/A' %></td>
+                            <td><%= res.endDate ? new Date(res.endDate).toLocaleDateString() : 'N/A' %></td>
+                            <td>
+                                <a href="/reservations/delete/<%= res._id %>" style="color: red;" onclick="return confirm('Supprimer cette réservation ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Aucune réservation pour le moment.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

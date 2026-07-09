@@ -8,7 +8,7 @@ exports.getLogin = (req, res) => {
 
 // Gérer la connexion
 exports.postLogin = async (req, res) => {
-    const { email, password } = req.body;
+console.log('📩 POST /login reçu — body:', req.body);
 
     try {
         // 1. Chercher l'utilisateur par son email

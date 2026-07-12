@@ -8,7 +8,10 @@ exports.getLogin = (req, res) => {
 
 // Gérer la connexion
 exports.postLogin = async (req, res) => {
-console.log('📩 POST /login reçu — body:', req.body);
+    // CETTE LIGNE DOIT ÊTRE ICI (LIGNE 11)
+    const { email, password } = req.body;
+
+    console.log('📩 POST /login reçu — body:', req.body);
 
     try {
         // 1. Chercher l'utilisateur par son email
@@ -25,7 +28,7 @@ console.log('📩 POST /login reçu — body:', req.body);
             return res.render('login', { error: "Mot de passe incorrect." });
         }
 
-        // 3. IMPORTANT : Enregistrer l'utilisateur dans la SESSION
+        // 3. Enregistrer l'utilisateur dans la SESSION
         req.session.user = {
             id: user._id,
             name: user.name,
@@ -36,7 +39,7 @@ console.log('📩 POST /login reçu — body:', req.body);
         res.redirect('/dashboard');
 
     } catch (err) {
-        console.error(err);
+        console.error("Erreur login:", err);
         res.render('login', { error: "Une erreur est survenue." });
     }
 };

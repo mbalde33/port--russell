@@ -26,8 +26,8 @@ app.use(session({
 }));
 
 // --- CONNEXION À LA BASE DE DONNÉES ---
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 5000
+mongoose.connect("mongodb+srv://admin:1234@cluster0.xerrxi6.mongodb.net/port-russell?retryWrites=true&w=majority", {
+serverSelectionTimeoutMS: 5000
 })
 .then(() => {
   console.log('✅ BRAVO : Tu es connecté à MongoDB !');

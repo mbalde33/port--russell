@@ -1,45 +1,37 @@
 const User = require('../models/User.js');
 const bcrypt = require('bcrypt');
 
-// Afficher la page de login
 exports.getLogin = (req, res) => {
     res.render('login', { error: null });
 };
 
-// Gérer la connexion
 exports.postLogin = async (req, res) => {
-    // CETTE LIGNE DOIT ÊTRE ICI (LIGNE 11)
     const { email, password } = req.body;
-
-    console.log('📩 POST /login reçu — body:', req.body);
+    console.log('📩 Tentative de connexion pour :', email);
 
     try {
-        // 1. Chercher l'utilisateur par son email
-        const user = await User.findOne({ email });
-
+        const user = await User.findOne({ email: email });
+        
         if (!user) {
+            console.log('❌ Utilisateur NON trouvé dans la base Atlas');
             return res.render('login', { error: "Utilisateur non trouvé." });
         }
 
-        // 2. Vérifier le mot de passe
+        console.log('✅ Utilisateur trouvé, vérification du mot de passe...');
         const isMatch = await bcrypt.compare(password, user.password);
+        console.log('Mots de passe correspondent ?', isMatch);
 
         if (!isMatch) {
+            console.log('❌ Mot de passe incorrect');
             return res.render('login', { error: "Mot de passe incorrect." });
         }
 
-        // 3. Enregistrer l'utilisateur dans la SESSION
-        req.session.user = {
-            id: user._id,
-            name: user.name,
-            email: user.email
-        };
-
-        // 4. Rediriger vers le dashboard
+        req.session.user = { id: user._id, name: user.name, email: user.email };
+        console.log('🚀 CONNEXION RÉUSSIE ! Redirection...');
         res.redirect('/dashboard');
 
     } catch (err) {
-        console.error("Erreur login:", err);
+        console.error("🔥 Erreur CRITIQUE :", err);
         res.render('login', { error: "Une erreur est survenue." });
     }
 };
